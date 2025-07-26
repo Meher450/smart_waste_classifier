@@ -53,4 +53,5 @@ if img:
                 label = predict(model, tensor)
 
             st.success(f"🧠 Prediction: **{label.capitalize()} Waste**")
-            speak(f"This is {label} waste.")
+            audio_file = speak(f"This is {label} waste.")
+            st.audio(audio_file, format="audio/mp3")
