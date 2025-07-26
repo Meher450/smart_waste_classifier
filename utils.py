@@ -4,7 +4,8 @@ import torch
 import torchvision.transforms as transforms
 from torchvision import models
 from PIL import Image
-import pyttsx3
+from gtts import gTTS
+import tempfile
 
 # Preprocessing function
 def preprocess_image(image):
@@ -33,7 +34,7 @@ def predict(model, image_tensor, class_names=["biodegradable", "non_recyclable",
 
 # Text-to-speech
 def speak(text):
-    engine = pyttsx3.init()
-    engine.setProperty("rate", 160)
-    engine.say(text)
-    engine.runAndWait()
+    tts = gTTS(text)
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as fp:
+        tts.save(fp.name)
+        return fp.name
